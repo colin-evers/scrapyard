@@ -14,12 +14,13 @@ Push-Location $scriptDir
 
 if (-not $SkipInit) {
     if (-not (Get-Command Enable-MSVC -ErrorAction SilentlyContinue)) {
-        $possibleEnable = Join-Path $scriptDir 'scripts\Enable-MSVC.ps1'
-        if (Test-Path $possibleEnable) {
-            . $possibleEnable
-        } elseif (Test-Path (Join-Path $scriptDir 'Enable-MSVC.ps1')) {
-            # backward compatibility: older location
-            . (Join-Path $scriptDir 'Enable-MSVC.ps1')
+        # Prefer an Enable-MSVC next to this script, or fall back to the parent folder for compatibility
+        $possibleEnableLocal = Join-Path $scriptDir 'Enable-MSVC.ps1'
+        $possibleEnableParent = Join-Path $scriptDir '..\Enable-MSVC.ps1'
+        if (Test-Path $possibleEnableLocal) {
+            . $possibleEnableLocal
+        } elseif (Test-Path $possibleEnableParent) {
+            . (Resolve-Path $possibleEnableParent)
         }
     }
     if (Get-Command Enable-MSVC -ErrorAction SilentlyContinue) {

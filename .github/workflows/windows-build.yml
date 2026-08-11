@@ -1,0 +1,30 @@
+name: Windows build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show environment
+        shell: pwsh
+        run: |
+          Write-Host "Running on: $env:RUNNER_OS"
+
+      - name: Build with MSVC
+        shell: pwsh
+        run: |
+          # Try to initialize the developer environment and run the build script
+          if (Test-Path .\scripts\Enable-MSVC.ps1) {
+            . .\scripts\Enable-MSVC.ps1
+            Enable-MSVC
+          }
+          .\scripts\build.ps1 -SkipInit
