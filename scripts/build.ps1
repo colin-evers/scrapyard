@@ -10,13 +10,14 @@ param(
 )
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
-Push-Location $scriptDir
+$rootDir = Split-Path $scriptDir -Parent
+Push-Location $rootDir
 
 if (-not $SkipInit) {
     if (-not (Get-Command Enable-MSVC -ErrorAction SilentlyContinue)) {
         # Prefer an Enable-MSVC next to this script, or fall back to the parent folder for compatibility
         $possibleEnableLocal = Join-Path $scriptDir 'Enable-MSVC.ps1'
-        $possibleEnableParent = Join-Path $scriptDir '..\Enable-MSVC.ps1'
+        $possibleEnableParent = Join-Path $rootDir 'Enable-MSVC.ps1'
         if (Test-Path $possibleEnableLocal) {
             . $possibleEnableLocal
         } elseif (Test-Path $possibleEnableParent) {
@@ -31,13 +32,13 @@ if (-not $SkipInit) {
 }
 
 # Ensure output directory exists
-$binDir = Join-Path $scriptDir 'bin'
+$binDir = Join-Path $rootDir 'bin'
 if (-not (Test-Path $binDir)) { New-Item -ItemType Directory -Path $binDir | Out-Null }
 
 # Compile with sensible defaults: enable exception handling and optimizations
-$src = Join-Path $scriptDir 'src\main.cpp'
+$src = Join-Path $rootDir 'src\main.cpp'
 $exe = Join-Path $binDir 'main.exe'
 
-cl /EHsc /nologo /W3 /O2 /Fe:$exe $src
+cl /EHsc /nologo /W3 /O2 /Fe:$exe /Fo:"$binDir\" $src
 
 Pop-Location

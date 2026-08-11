@@ -1,5 +1,3 @@
 .vscode
-*.exe
-*.obj
-*.pdb
-# Ignore build output\nbin/
+./bin
+package.json
