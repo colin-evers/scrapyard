@@ -16,7 +16,7 @@
 This repository includes a small sample program and helper scripts to make compiling with the Microsoft Visual C++ compiler (cl.exe) easier from PowerShell.
 
 Files of interest:
-- [Enable-MSVC.ps1](C:/Users/evers/Documents/GitHub/ScrapYard.worktrees/enable-msvc-compiler-in-terminal/Enable-MSVC.ps1) - a function Enable-MSVC that locates and dot-sources Visual Studio's Launch-VsDevShell.ps1 to configure the current PowerShell session for cl.exe.
+- [scripts/Enable-MSVC.ps1](C:/Users/evers/Documents/GitHub/ScrapYard.worktrees/enable-msvc-compiler-in-terminal/scripts/Enable-MSVC.ps1) - a function Enable-MSVC that locates and dot-sources Visual Studio's Launch-VsDevShell.ps1 to configure the current PowerShell session for cl.exe.
 - [build.ps1](C:/Users/evers/Documents/GitHub/ScrapYard.worktrees/enable-msvc-compiler-in-terminal/build.ps1) - a convenience build script that initializes MSVC (via Enable-MSVC when available) and compiles src/main.cpp to bin/main.exe.
 - [src/main.cpp](C:/Users/evers/Documents/GitHub/ScrapYard.worktrees/enable-msvc-compiler-in-terminal/src/main.cpp) - the sample source.
 
@@ -24,7 +24,7 @@ Usage (interactive PowerShell session):
 
 1. Dot-source the helper (loads the Enable-MSVC function):
 
-    . .\Enable-MSVC.ps1
+    . .\scripts\Enable-MSVC.ps1
 
 2. Initialize the MSVC Developer environment:
 
@@ -42,4 +42,4 @@ After a successful build the executable will be at bin\main.exe. You can run it 
 
     .\bin\main.exe
 
-If Visual Studio is installed in a custom location, edit [Enable-MSVC.ps1](C:/Users/evers/Documents/GitHub/ScrapYard.worktrees/enable-msvc-compiler-in-terminal/Enable-MSVC.ps1) to point to the correct Launch-VsDevShell.ps1 path.
+If Visual Studio is installed in a custom location, edit [scripts/Enable-MSVC.ps1](C:/Users/evers/Documents/GitHub/ScrapYard.worktrees/enable-msvc-compiler-in-terminal/scripts/Enable-MSVC.ps1) to point to the correct Launch-VsDevShell.ps1 path.
