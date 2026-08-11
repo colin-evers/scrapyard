@@ -40,5 +40,12 @@ $src = Join-Path $rootDir 'src\main.cpp'
 $exe = Join-Path $binDir 'main.exe'
 
 cl /EHsc /nologo /W3 /O2 /Fe:$exe /Fo:"$binDir\" $src
+$compileExitCode = $LASTEXITCODE
+if ($compileExitCode -eq 0) {
+    Write-Host "Compile succeeded."
+} else {
+    Write-Host "Compile failed with exit code $compileExitCode" -ForegroundColor Red
+}
+return $compileExitCode
 
 Pop-Location
